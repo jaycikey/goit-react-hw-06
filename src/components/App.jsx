@@ -1,43 +1,38 @@
-import { ContactList } from "./ContactList/ContactList";
-import items from "./contacts.json";
 import styles from "./App.module.css";
-import { SearchBar } from "./SearchBox/SearchBar";
-import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addContact, deleteContact } from "../redux/contactsSlice";
+import { setFilter } from "../redux/filtersSlice";
+import { ContactList } from "./ContactList/ContactList";
 import { ContactForm } from "./ContactForm/ContactForm";
+import { SearchBar } from "./SearchBox/SearchBar";
 
 export const App = () => {
-  const [filter, setFilter] = useState("");
-  const [contacts, setContacts] = useState(() => {
-    const savedContacts = localStorage.getItem("contacts");
-    return savedContacts ? JSON.parse(savedContacts) : items;
-  });
+  const dispatch = useDispatch();
+  const contacts = useSelector((state) => state.contacts.items);
+  const filter = useSelector((state) => state.filters);
+
+  const handleAddContact = (newContact) => {
+    dispatch(addContact(newContact));
+  };
+
+  const handleDeleteContact = (contactId) => {
+    dispatch(deleteContact(contactId));
+  };
+
+  const handleSetFilter = (value) => {
+    dispatch(setFilter(value));
+  };
 
   const filteredContacts = contacts.filter((contact) =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
 
-  useEffect(() => {
-    localStorage.setItem("contacts", JSON.stringify(contacts));
-  }, [contacts]);
-
-  const addContact = (newContact) => {
-    setContacts((prev) => {
-      return [...prev, newContact];
-    });
-  };
-
-  const deleteContact = (contactId) => {
-    setContacts((prev) => {
-      return prev.filter((item) => item.id !== contactId);
-    });
-  };
-
   return (
     <div className={styles.phonebook}>
       <h1>Phonebook</h1>
-      <ContactForm onAdd={addContact} />
-      <SearchBar text={filter} onChange={setFilter} />
-      <ContactList contacts={filteredContacts} onDelete={deleteContact} />
+      <ContactForm onAdd={handleAddContact} />
+      <SearchBar text={filter} onChange={handleSetFilter} />
+      <ContactList contacts={filteredContacts} onDelete={handleDeleteContact} />
     </div>
   );
 };
