@@ -1,17 +1,26 @@
 import styles from "./SearchBar.module.css";
+import { useSelector, useDispatch } from "react-redux";
+import { setFilter } from "../../redux/filtersSlice";
 
-const SearchBar = ({ text, onChange }) => {
+const SearchBar = () => {
+  const filter = useSelector((state) => state.filters);
+
+  const dispatch = useDispatch();
+
+  const handleChange = (e) => {
+    dispatch(setFilter(e.target.value));
+  };
+
   return (
     <div className={styles.inputContainer}>
-      <label>
-        Find contacts by name:
-        <input
-          className={styles.input}
-          type="text"
-          value={text}
-          onChange={(evt) => onChange(evt.target.value)}
-        />
-      </label>
+      <label htmlFor="search-filter">Find contacts by name:</label>
+      <input
+        id="search-filter"
+        className={styles.input}
+        type="text"
+        value={filter}
+        onChange={handleChange}
+      />
     </div>
   );
 };
