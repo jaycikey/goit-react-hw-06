@@ -2,11 +2,11 @@ import styles from "./App.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { addContact, deleteContact } from "../redux/contactsSlice";
 import { setFilter } from "../redux/filtersSlice";
-import { ContactList } from "./ContactList/ContactList";
-import { ContactForm } from "./ContactForm/ContactForm";
-import { SearchBar } from "./SearchBox/SearchBar";
+import ContactList from "./ContactList/ContactList";
+import ContactForm from "./ContactForm/ContactForm";
+import SearchBar from "./SearchBox/SearchBar";
 
-export const App = () => {
+const App = () => {
   const dispatch = useDispatch();
   const contacts = useSelector((state) => state.contacts.items);
   const filter = useSelector((state) => state.filters);
@@ -36,3 +36,5 @@ export const App = () => {
     </div>
   );
 };
+
+export default App;

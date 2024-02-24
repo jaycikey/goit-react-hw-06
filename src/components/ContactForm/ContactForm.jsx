@@ -4,7 +4,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useId } from "react";
 import styles from "./ContactForm.module.css";
-import { Button } from "../Button/Button";
+import Button from "../Button/Button";
 import { addContact } from "../../redux/contactsSlice";
 
 const contactSchema = Yup.object().shape({
@@ -28,7 +28,7 @@ const contactSchema = Yup.object().shape({
     ),
 });
 
-export const ContactForm = () => {
+const ContactForm = () => {
   const dispatch = useDispatch();
   const nameFieldId = useId();
   const numberFieldId = useId();
@@ -67,3 +67,5 @@ export const ContactForm = () => {
     </Formik>
   );
 };
+
+export default ContactForm;

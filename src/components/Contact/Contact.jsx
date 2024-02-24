@@ -1,9 +1,9 @@
 import { FaUserAlt } from "react-icons/fa";
 import { MdPhone } from "react-icons/md";
-import { Button } from "../Button/Button";
+import Button from "../Button/Button";
 import styles from "./Contact.module.css";
 
-export const Contact = ({ id, name, number, onDelete }) => {
+const Contact = ({ id, name, number, onDelete }) => {
   return (
     <li className={styles.contactItem}>
       <div className={styles.contactInfo} id={id}>
@@ -22,3 +22,5 @@ export const Contact = ({ id, name, number, onDelete }) => {
     </li>
   );
 };
+
+export default Contact;
